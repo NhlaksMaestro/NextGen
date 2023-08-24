@@ -6,47 +6,53 @@ This document provides an overview of the Tax Calculation MVC website project. T
 
 The project is organized into several modules, each serving a specific purpose.
 
-### NextGenDB (SQL Server Database Project)
+### SQL Server Database Project
 
 - Project Name: NextGenDB
 
 This module contains the database schema and scripts required for the application. It's designed as a SQL Server Database Project to facilitate easy migration and connection changes. The database stores user information, tax rates, postal codes, and other relevant data.
 
-### NextGen.Contract
+### System Contracts Layer
 
 - Project Name: NextGen.Contract
 
 This module defines the contract interfaces that provide the contract between different layers of the application. It includes interfaces for repositories and domain services, allowing loose coupling between layers.
 
-### NextGen.Models
+### Project Models Layer
 
 - Project Name: NextGen.Models
 
 This module defines the data models, view models, and exception models used throughout the application. It includes Entity Framework (EF) models that map to database tables and view models that represent data for presentation and interaction.
 
-### NextGen.Domain
+### Domain Layer
 
 - Project Name: NextGen.Domain
 
 The domain layer is responsible for implementing business logic and complex operations. It communicates with the repository layer to perform tasks that involve multiple steps and processes. It encapsulates domain-specific rules and calculations related to tax calculation.
 
-### NextGen.Repository
+### Repository Layer
 
 - Project Name: NextGen.Repository
 
 The repository layer is responsible for database interactions and provides a data access layer. It implements the interfaces defined in the contract module. This layer abstracts away the database operations, enabling the domain layer to focus on business logic.
 
-### NextGen.Web
+### ASP.Net core MVC Frontend & Backend
 
 - Project Name: NextGen.Web
 
 This module represents the main MVC application using ASP.NET Core. It serves as the user interface for the tax calculation process. The project uses Bootstrap for styling and includes controllers, views, and frontend assets. It interacts with the domain layer to calculate taxes based on user input.
 
-### NextGen.NUnit
+### Unit Tests
 
 - Project Name: NextGen.NUnit
 
 The NUnit project contains unit tests to ensure the correctness of the application's functionality. It includes tests for both the domain and repository layers, validating business logic and database interactions. These tests help maintain the quality and reliability of the application.
+
+### User Interface Tests
+
+- Project Name: NextGen.UI.Test
+
+The NextGen.UI.Test project contains UI tests using Microsoft Edge WebDriver to verify the functionality of the NextGen application's user interface. These tests ensure that the user interface components are working as expected and help maintain the quality of the application.
 
 ## Project Workflow
 
@@ -61,6 +67,8 @@ The NUnit project contains unit tests to ensure the correctness of the applicati
 5. The controller in the NextGen.Web project displays the calculated tax amount to the user using views and templates.
 
 6. The NextGen.NUnit project contains unit tests that validate the correctness of the business logic and database interactions in the domain and repository layers.
+
+7. The NextGen.UI.Test project contains unit tests that validate the  User Interface logic and interactions.
 
 ## Conclusion
 

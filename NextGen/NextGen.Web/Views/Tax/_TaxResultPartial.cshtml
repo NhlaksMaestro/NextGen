@@ -7,8 +7,11 @@
         <p>Tax Calculation Type: @Model.TaxCalculationType</p>
         <p>Email: @Model.Email</p>
         <p>Postal Code: @Model.PostalCode</p>
-        <p>Earning Per Month: @Model.EarningPerMonth</p>
+        <p>Rate Percentage: @Model.RatePercentage</p>
         <p>Earning Per Year: @Model.EarningPerYear</p>
         <p>Calculated Tax: @Model.CalculatedTax</p>
+
+        <a asp-action="Index" class="btn btn-secondary">calculate Tax</a>
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-secondary">Home</a>
     </div>
 }

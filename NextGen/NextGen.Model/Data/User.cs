@@ -14,16 +14,20 @@ namespace NextGen.Model.Data
 
         [Required]
         [StringLength(50)]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$", ErrorMessage = "Invalid email format.")]
+
         public string Email { get; set; }
 
-        public Decimal EarningPerMonth { get; set; }
+        public decimal? EarningPerMonth { get; set; }
 
-        public Decimal? EarningPerYear { get; set; }
-
+        [Required]
+        public decimal EarningPerYear { get; set; }
+        [Required]
         public string RatePercentage { get; set; }
 
         public int? RateId { get; set; }
 
+        [Required]
         public string PostalCodeId { get; set; }
 
         [ForeignKey("RateId")]

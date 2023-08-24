@@ -39,7 +39,7 @@ namespace NextGen.Web.Controllers
                 (decimal, int, decimal) calculatedTax = await _taxCalculationDomain.CalculateProgressiveTaxAnnual(viewModel.EarningPerYear);
                 viewModel.RateId = calculatedTax.Item2;
                 viewModel.CalculatedTax = calculatedTax.Item1;
-                viewModel.RatePercentage = $"{calculatedTax.Item3}";
+                viewModel.RatePercentage = $"{calculatedTax.Item3}%";
                 viewModel.Id = await _userDomain.SaveUserInfo(viewModel);
                 return PartialView("_TaxResultPartial", viewModel);
             }
@@ -47,7 +47,7 @@ namespace NextGen.Web.Controllers
             {
                 (decimal, decimal) Results = _taxCalculationDomain.CalculateFlatRateTax(viewModel.EarningPerYear);
                 viewModel.CalculatedTax = Results.Item1;
-                viewModel.RatePercentage = $"{Results.Item2}";
+                viewModel.RatePercentage = $"{Results.Item2}%";
                 viewModel.Id = await _userDomain.SaveUserInfo(viewModel);
                 return PartialView("_TaxResultPartial", viewModel);
             }
@@ -56,7 +56,7 @@ namespace NextGen.Web.Controllers
                 viewModel.RateId = 0;
                 (decimal, decimal) Results = _taxCalculationDomain.CalculateFlatRateTax(viewModel.EarningPerYear);
                 viewModel.CalculatedTax = Results.Item1;
-                viewModel.RatePercentage = $"{Results.Item2}";
+                viewModel.RatePercentage = $"{Results.Item2}%";
                 viewModel.Id = await _userDomain.SaveUserInfo(viewModel);
                 return View("Index", viewModel);
             }

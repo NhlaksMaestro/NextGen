@@ -15,16 +15,11 @@
         </div>
         <div class="form-group">
             <label asp-for="PostalCode">Postal Code</label>
-            <select asp-for="PostalCode" class="form-control" asp-items="new SelectList(Model.PostalCodes, nameof(NextGen.Model.Data.PostalCode.PostalCodeValue), nameof(NextGen.Model.Data.PostalCode.PostalCodeValue))"></select>
+            <select asp-for="PostalCode" class="form-control" asp-items="new SelectList(Model.PostalCodes, nameof(NextGen.Model.Data.PostalCode.PostalCodeValue), nameof(NextGen.Model.Data.PostalCode.TaxCalculationType))"></select>
             <span asp-validation-for="PostalCode" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="EarningPerMonth">Earning Per Month</label>
-            <input asp-for="EarningPerMonth" class="form-control" />
-            <span asp-validation-for="EarningPerMonth" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="EarningPerYear">Earning Per Year</label>
+            <label asp-for="EarningPerYear"></label>
             <input asp-for="EarningPerYear" class="form-control" />
             <span asp-validation-for="EarningPerYear" class="text-danger"></span>
         </div>

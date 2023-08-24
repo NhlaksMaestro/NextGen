@@ -1,41 +1,109 @@
-﻿using OpenQA.Selenium;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
 
 namespace WebDriverTest
 {
-    public class TaxCalculatorTest
+    [TestClass]
+    public class TaxCalculatorTests
     {
-        static void Main(string[] args)
+        private EdgeDriver _driver;
+        private string _url;
+
+        [TestInitialize]
+        public void EdgeDriverInitialize()
         {
-            // Replace with the path to your own EdgeDriver executable
-            var options = new EdgeOptions();
-            options.UseChromium = true;
-            var driver = new EdgeDriver(@"C:\path\to\edgedriver", options);
+            // Initialize Edge WebDriver
+            _driver = new EdgeDriver();
+            _url = "https://localhost:7137/Tax/Index";
+        }
 
-            driver.Url = "http://localhost:5000/Tax/CalculateTax";
+        [TestMethod]
+        public void VerifyIndexPageTitle()
+        {
+            // Navigate to the index page of TaxController
+            _driver.Url = _url;
 
-            // Find the form elements and interact with them
-            var emailInput = driver.FindElement(By.Id("Email"));
-            emailInput.SendKeys("test@example.com");
+            string expectedTitle = "Tax Calculator";
 
-            var postalCodeSelect = driver.FindElement(By.Id("PostalCode"));
-            var selectElement = new SelectElement(postalCodeSelect);
-            selectElement.SelectByValue("12345");
+            Assert.AreEqual(expectedTitle, _driver.Title);
+        }
 
-            var earningPerMonthInput = driver.FindElement(By.Id("EarningPerMonth"));
-            earningPerMonthInput.SendKeys("5000");
+        [TestMethod]
+        public void VerifyEmailValidationErrorMessage()
+        {
+            _driver.Url = _url; 
 
-            var earningPerYearInput = driver.FindElement(By.Id("EarningPerYear"));
-            earningPerYearInput.SendKeys("60000");
+            // Enter an invalid email
+            _driver.FindElementByCssSelector("#Email").SendKeys("invalid-email");
 
-            // Submit the form
-            var submitButton = driver.FindElement(By.CssSelector("button[type='submit']"));
-            submitButton.Click();
+            // Click a different field to trigger validation
+            _driver.FindElementByCssSelector("#EarningPerMonth").Click();
 
-            // Verify the results
-            // ...
+            // Find the validation error message
+            var errorMessage = _driver.FindElementByCssSelector("#Email-error");
 
-            driver.Quit();
+            // Assert the error message text
+            Assert.AreEqual("Invalid email format.", errorMessage.Text);
+        }
+
+        [TestMethod]
+        public void VerifyEarningPerYearRequiredErrorMessage()
+        {
+            _driver.Url = _url;
+
+            // Click the "Calculate" button without entering EarningPerYear
+            _driver.FindElementByCssSelector("#calculateButton").Click();
+
+            // Find the validation error message for EarningPerYear
+            var errorMessage = _driver.FindElementByCssSelector("#EarningPerYear-error");
+
+            // Assert the error message text
+            Assert.AreEqual("The EarningPerYear field is required.", errorMessage.Text);
+        }
+
+        [TestMethod]
+        public void VerifySuccessfulTaxCalculation()
+        {
+            _driver.Url = _url;
+
+            // Enter valid data for tax calculation
+            _driver.FindElementByCssSelector("#Email").SendKeys("valid-email@example.com");
+            _driver.FindElementByCssSelector("#EarningPerYear").SendKeys("50000");
+            _driver.FindElementByCssSelector("#PostalCodeId").SendKeys("7441");
+
+            // Click the "Calculate" button
+            _driver.FindElementByCssSelector("#calculateButton").Click();
+
+            // Find the tax result element
+            var taxResult = _driver.FindElementByCssSelector("#taxResult");
+
+            // Assert that tax calculation result is displayed
+            Assert.IsTrue(taxResult.Displayed);
+        }
+
+        [TestMethod]
+        public void VerifyInvalidPostalCodeErrorMessage()
+        {
+            _driver.Url = _url;
+
+            // Enter an invalid postal code
+            _driver.FindElementByCssSelector("#PostalCodeId").SendKeys("123456");
+
+            // Click the "Calculate" button
+            _driver.FindElementByCssSelector("#calculateButton").Click();
+
+            // Find the validation error message for PostalCodeId
+            var errorMessage = _driver.FindElementByCssSelector("#PostalCodeId-error");
+
+            // Assert the error message text
+            Assert.AreEqual("The field Postal Code must match a valid postal code.", errorMessage.Text);
+        }
+
+        [TestCleanup]
+        public void EdgeDriverCleanup()
+        {
+            _driver.Quit();
         }
     }
 }

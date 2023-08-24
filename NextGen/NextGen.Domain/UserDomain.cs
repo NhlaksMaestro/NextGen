@@ -21,7 +21,7 @@ namespace NextGen.Domain
             {
                 Email = user.Email,
                 EarningPerMonth = user.EarningPerMonth,
-                EarningPerYear = new Decimal?(user.EarningPerYear),
+                EarningPerYear = user.EarningPerYear,
                 PostalCodeId = user.PostalCode,
                 RatePercentage = user.RatePercentage,
                 CreatedDate = DateTime.Now

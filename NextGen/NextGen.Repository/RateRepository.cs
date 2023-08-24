@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NextGen.Repository
 {
@@ -17,15 +18,21 @@ namespace NextGen.Repository
         {
         }
 
-        public async Task<Rate?> GetUserRateForIncome(Decimal annualIncome)
+        public async Task<Rate?> GetUserRateForIncome(decimal annualIncome)
         {
             List<Rate> ratesInRange = await Query().Where(r => annualIncome >= r.From).ToListAsync();
-            foreach (Rate rate1 in ratesInRange)
+            foreach (Rate rateModel in ratesInRange)
             {
-                Rate rate = rate1;
-                int rangeTo = int.Parse(rate.To.Split(' ')[0]);
-                if (annualIncome <= rangeTo)
-                    return rate;
+                int rangeTo = 0;
+                if (int.TryParse(rateModel.To.Split(' ')[0], out rangeTo))
+                {
+                    if (annualIncome <= rangeTo)
+                        return rateModel;
+                }
+                else
+                {
+                    return rateModel;
+                }
             }
             return null;
         }

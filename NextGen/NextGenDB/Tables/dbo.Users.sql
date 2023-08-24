@@ -1,10 +1,10 @@
 ﻿CREATE TABLE [dbo].[Users](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Email] [varchar](50) NOT NULL,
-	[EarningPerMonth] [decimal] NOT NULL,
-	[EarningPerYear] [decimal] NULL,
+	[EarningPerMonth] [decimal] NULL,
+	[EarningPerYear] [decimal] NOT NULL,
 	[RateId] [int] NULL,
-	[RatePercentage] [varchar](5) NULL,
+	[RatePercentage] [varchar](5) NOT NULL,
 	[PostalCodeId] [varchar](10) NOT NULL,
 	[CreatedDate] [datetime] NOT NULL DEFAULT GETDATE(),
 	CONSTRAINT [PK_dbo_User] PRIMARY KEY ([Id]),

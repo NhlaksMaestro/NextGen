@@ -19,7 +19,5 @@ namespace NextGen.Model.Data
         public string To { get; set; }
 
         public DateTime CreatedDate { get; set; }
-
-        public DateTime ModifiedDate { get; set; }
     }
 }

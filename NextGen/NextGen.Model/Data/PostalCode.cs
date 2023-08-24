@@ -20,7 +20,5 @@ namespace NextGen.Model.Data
         public string TaxCalculationType { get; set; }
 
         public DateTime CreatedDate { get; set; }
-
-        public DateTime ModifiedDate { get; set; }
     }
 }

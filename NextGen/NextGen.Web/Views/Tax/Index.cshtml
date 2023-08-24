@@ -1,0 +1,35 @@
+﻿@model NextGen.Model.ViewModel.TaxCalculationViewModel
+
+@{
+    ViewData["Title"] = "Tax Calculator";
+}
+
+<div class="container">
+    <h2>Tax Calculator</h2>
+
+    <form asp-controller="Tax" asp-action="CalculateTax" method="post">
+        <div class="form-group">
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PostalCode">Postal Code</label>
+            <select asp-for="PostalCode" class="form-control" asp-items="new SelectList(Model.PostalCodes, nameof(NextGen.Model.Data.PostalCode.PostalCodeValue), nameof(NextGen.Model.Data.PostalCode.PostalCodeValue))"></select>
+            <span asp-validation-for="PostalCode" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EarningPerMonth">Earning Per Month</label>
+            <input asp-for="EarningPerMonth" class="form-control" />
+            <span asp-validation-for="EarningPerMonth" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EarningPerYear">Earning Per Year</label>
+            <input asp-for="EarningPerYear" class="form-control" />
+            <span asp-validation-for="EarningPerYear" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Calculate Tax</button>
+    </form>
+
+    @await Html.PartialAsync("_TaxResultPartial", Model)
+</div>
